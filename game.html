@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper by Windsor Yeh</title>
+    <link rel="stylesheet" href="./game.css">
+    <!--link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous"-->
+</head>
+<body>
+    <header>
+        <div style="display: inline-block; width: 30%; padding: 10px;">
+            <span>
+                <a href="./index.html">
+                    <img src="tile_textures/flag.png" alt="indicated unflagged mines" class="displayIcon">
+                </a>
+            </span>
+            <span id="displayRem" class="display">
+                0
+            </span>
+            <br>
+            <span>
+                <img src="tile_textures/clock.png" alt="time elapsed" class="displayIcon">
+            </span>
+            <span id="displayTime" class="display">
+                0.00
+            </span>
+            <input type="button" id="reset" value="Reset" class="reset" onclick="init(w, h, m)">
+        </div>
+        <div class="newGameSettings">
+            <input type="button" id="easy" value="Easy (10x10, 10 mines)" class="defaults" onclick="init(10,10,10)">
+            <input type="button" id="intermediate" value="Intermediate (16x16, 40 mines)" class="defaults" onclick="init(16,16,40)">
+            <input type="button" id="hard" value="Hard (30x16, 99 mines)" class="defaults" onclick="init(30,16,99)">
+            <form>
+                <inputLabel>Width:</inputLabel>
+                <input type="number" id="width" value="16" min="1" max="50" class="custom customInput" placeholder="Width (1-50)">
+                <inputLabel>Height:</inputLabel>
+                <input type="number" id="height" value="16" min="1" max="50" class="custom customInput" placeholder="Height (1-50)">
+                <inputLabel>Mines:</inputLabel>
+                <input type="number" id="mines" value="40" min="1" max="2491" class="custom customInput" placeholder="Mines (1-2491)">
+                <input type="button" id="submit" value="Generate" title="Generate Custom Field" class="custom">
+            </form>
+        </div>
+    </header>
+    <div style="height: 110px;"></div>
+    <div id="game-container">
+        <table draggable="false">
+            <tr>
+                <td>
+                    <img class="corner" src="tile_textures/corner01.png" draggable="false">
+                </td>
+                <td>
+                    <img class="hb" src="tile_textures/horizontalBorder.png" draggable="false">
+                </td>
+                <td>
+                    <img class="corner" src="tile_textures/corner11.png" draggable="false">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img class="vb" src="tile_textures/verticalBorder.png" draggable="false">
+                </td>
+                <td>
+                    <div id="game-board"></div>
+                </td>
+                <td>
+                    <img class="vb" src="tile_textures/verticalBorder.png" draggable="false">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img class="corner" src="tile_textures/corner02.png" draggable="false">
+                </td>
+                <td>
+                    <img class="hb" src="tile_textures/horizontalBorder.png" draggable="false">
+                </td>
+                <td>
+                    <img class="corner" src="tile_textures/corner12.png" draggable="false">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script src="./game.js"></script>
+    <script src="./inGameForm.js"></script>
+</body>
+</html>

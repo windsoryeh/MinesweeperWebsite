@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper by Windsor Yeh</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <h1>Minesweeper</h1>
+    <h2>by Windsor Yeh</h2>
+    <div class="newGameSettings">
+        <input type="button" id="easy" value="Easy (10x10, 10 mines)" class="defaults" onclick="init(10,10,10)">
+        <input type="button" id="intermediate" value="Intermediate (16x16, 40 mines)" class="defaults" onclick="init(16,16,40)">
+        <input type="button" id="hard" value="Hard (30x16, 99 mines)" class="defaults" onclick="init(30,16,99)">
+        <form>
+            <inputLabel>Width:</inputLabel>
+            <input type="number" id="width" value="16" min="1" max="50" class="custom customInput" placeholder="Width (1-50)">
+            <inputLabel>Height:</inputLabel>
+            <input type="number" id="height" value="16" min="1" max="50" class="custom customInput" placeholder="Height (1-50)">
+            <inputLabel>Mines:</inputLabel>
+            <input type="number" id="mines" value="40" min="1" max="2491" class="custom customInput" placeholder="Mines (1-2491)">
+            <input type="button" id="submit" value="Generate" title="Generate Custom Field" class="custom">
+        </form>
+
+    </div>
+    <script src="./homePageForm.js"></script>
+</body>
+</html>
