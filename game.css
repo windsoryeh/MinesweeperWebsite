@@ -1,5 +1,7 @@
 body {
     background-color: #ababab;
+    margin: 0;
+    padding-top: 110px; /* Match the height of the header */
 }
 
 img.cover:hover {
@@ -150,4 +152,20 @@ header {
     background-color: #999;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    height: 110px; /* Adjust based on the actual height of your header */
+}
+
+/* Ensure the game container is scrollable */
+#game-container {
+    margin: 0 auto;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: calc(100vh - 110px); /* Adjust height to fit below the header */
+    box-sizing: border-box;
+}
+
+div#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
 }
