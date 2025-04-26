@@ -20,9 +20,9 @@ submitButton.addEventListener("click", function() {
     submitButton.style.color = "#000";
     submitButton.style.fontSize = "25px";
     submitButton.style.backgroundColor = "#FFF";
-    window.location.replace(`./game.html#init(${w},${h},${m})`);
+    window.location.replace(`./classic.html#init(${w},${h},${m})`);
 })
 
 function init(w, h, m) {
-    window.location.replace(`./game.html#init(${w},${h},${m})`);
+    window.location.replace(`./classic.html#init(${w},${h},${m})`);
 }
