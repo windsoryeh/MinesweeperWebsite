@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minesweeper classic by Windsor Yeh</title>
+    <title>Minesweeper sweep mode by Windsor Yeh</title>
     <link rel="stylesheet" href="./game.css">
     <link rel="icon" type="image/png" href="tile_textures/flag.png">
 </head>
@@ -11,8 +11,8 @@
     <header>
         <div style="display: inline-block; width: 30%; padding: 10px;">
             <span>
-                <a href="./index.html">
-                    <img src="tile_textures/flag.png" alt="indicated unflagged mines" class="displayIcon">
+                <a href="./sweepHome.html">
+                    <img src="tile_textures/-1.png" alt="indicated unflagged mines" class="displayIcon">
                 </a>
             </span>
             <span id="displayRem" class="display">
@@ -43,7 +43,6 @@
         </div>
     </header>
     <div id="preloader">
-        <img src="tile_textures/-1.png">
         <img src="tile_textures/0.png">
         <img src="tile_textures/1.png">
         <img src="tile_textures/2.png">
@@ -93,7 +92,7 @@
             </tr>
         </table>
     </div>
-    <script src="./classic.js"></script>
+    <script src="./sweep.js"></script>
     <script src="./inGameForm.js"></script>
 </body>
 </html>
