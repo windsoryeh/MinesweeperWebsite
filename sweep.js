@@ -4,6 +4,10 @@ let digs = 0;
 let flags = 0;
 let chordCheck = 0;
 let size = 40; // Size of each tile in pixels
+let speedrun = false;
+let updateInterval = 50; // Update interval in milliseconds
+let speedrunLimit = 5;
+let speedrunTimer = speedrunLimit;
 
 timerDisplay = document.getElementById("displayTime")
 remDisplay = document.getElementById("displayRem")
@@ -84,6 +88,7 @@ function create2DList(rows, cols, initialValue) {
 }
 
 function init(width, height, mineCount) {
+    speedrunTimer = speedrunLimit;
     digs = 0;
     flags = 0;
     timing = 0;
@@ -118,7 +123,10 @@ function dig(x, y){
                 explode(x, y);
                 timerDisplay.style.color = "#F00";
             }
-            else digs++;
+            else {
+                digs++;
+                speedrunTimer = speedrunLimit;
+            }
             if (digs == (w * h - m)) {
                 timing = 2;
                 let date = new Date();
@@ -139,6 +147,7 @@ function flag(x, y) {
         let tile = document.getElementById(`tile_${x}_${y}`);
         if (dug[y][x] == 0) {
             if (field[y][x] == -1) {
+                speedrunTimer = speedrunLimit;
                 // Remove the mine and update the tile appearance
                 field[y][x] = 0; // Set the mine cell to 0
                 tile.src = `./tile_textures/0.png`; // Show the cleared tile with no mines
@@ -352,12 +361,35 @@ function explode(x, y) {
     timerDisplay.style.color = "#F00";
 }
 
+function toggleSpeedrun() {
+    let icon = document.getElementById("clock");
+    speedrun = !speedrun;
+    if (speedrun) {
+        icon.style.filter = "invert(1)";
+        speedrunTimer = speedrunLimit;
+    }
+    else {
+        icon.style.filter = "invert(0)";
+    }
+}
+
 function updateTimer() {
     if (timing == 1) {
         let date = new Date();
         time = (date.getTime() - time0) / 1000;
-        timerDisplay.innerHTML = time.toFixed(2);
+        if (speedrun) {
+            speedrunTimer -= updateInterval / 1000;
+            if (speedrunTimer <= 0) {
+                timing = 2;
+                speedrunTimer = 0;
+
+                reveal();
+                timerDisplay.style.color = "#F00";
+            }
+            timerDisplay.innerHTML = `${time.toFixed(2)} - ${speedrunTimer.toFixed(2)}`;
+        }
+        else timerDisplay.innerHTML = time.toFixed(2);
     }
 }
 
-setInterval(updateTimer, 50);
+setInterval(updateTimer, updateInterval);

@@ -4,8 +4,12 @@ let digs = 0;
 let flags = 0;
 let chordCheck = 0;
 let size = 40; // Size of each tile in pixels
+let speedrun = false;
+let updateInterval = 50; // Update interval in milliseconds
+let speedrunLimit = 5;
+let speedrunTimer = speedrunLimit;
 
-timerDsiplay = document.getElementById("displayTime")
+timerDisplay = document.getElementById("displayTime")
 remDisplay = document.getElementById("displayRem")
 
 const fragment = window.location.hash.substring(1);
@@ -35,7 +39,7 @@ function createTable(tableData) {
             var cell = document.createElement('td');
             cell.style.height = `${size}px`;
             cell.style.width = `${size}px`;
-            cell.class = "cell";
+            cell.Name = "cell";
 
             var img = document.createElement('img');
             img.src = `./tile_textures/cover.png`;
@@ -84,12 +88,13 @@ function create2DList(rows, cols, initialValue) {
 }
 
 function init(width, height, mineCount) {
+    speedrunTimer = speedrunLimit;
     digs = 0;
     flags = 0;
     timing = 0;
     time = 0;
-    timerDsiplay.style.color = "#000";
-    timerDsiplay.innerHTML = "0.00";
+    timerDisplay.style.color = "#000";
+    timerDisplay.innerHTML = "0.00";
     remDisplay.innerHTML = mineCount;
     w = width; h = height; m = mineCount;
     field = create2DList(height, width, 0);
@@ -116,15 +121,18 @@ function dig(x, y){
             }
             if (field[y][x] === -1) {
                 explode(x, y);
-                timerDsiplay.style.color = "#F00";
+                timerDisplay.style.color = "#F00";
             }
-            else digs++;
+            else {
+                digs++;
+                speedrunTimer = speedrunLimit;
+            }
             if (digs == (w * h - m)) {
                 timing = 2;
                 let date = new Date();
                 time = (date.getTime() - time0) / 1000;
-                timerDsiplay.innerHTML = time;
-                timerDsiplay.style.color = "#0F0";
+                timerDisplay.innerHTML = time;
+                timerDisplay.style.color = "#0F0";
                 reveal();
             }
         }
@@ -138,6 +146,7 @@ function flag(x, y){
     if (timing == 1){
         let tile = document.getElementById(`tile_${x}_${y}`);
         if (dug[y][x]==0) {
+            speedrunTimer = speedrunLimit;
             tile.src = `./tile_textures/flag.png`;
             dug[y][x] = 2; // Mark as flagged
             flags++;
@@ -310,12 +319,34 @@ function explode(x, y) {
     tile.src = `./tile_textures/explode.png`;
 }
 
+function toggleSpeedrun() {
+    let icon = document.getElementById("clock");
+    speedrun = !speedrun;
+    if (speedrun) {
+        icon.style.filter = "invert(1)";
+        speedrunTimer = speedrunLimit;
+    }
+    else {
+        icon.style.filter = "invert(0)";
+    }
+}
+
 function updateTimer() {
     if (timing == 1) {
         let date = new Date();
         time = (date.getTime() - time0) / 1000;
-        timerDsiplay.innerHTML = time.toFixed(2);
+        if (speedrun) {
+            speedrunTimer -= updateInterval / 1000;
+            if (speedrunTimer <= 0) {
+                timing = 2;
+                speedrunTimer = 0;
+                reveal();
+                timerDisplay.style.color = "#F00";
+            }
+            timerDisplay.innerHTML = `${time.toFixed(2)} - ${speedrunTimer.toFixed(2)}`;
+        }
+        else timerDisplay.innerHTML = time.toFixed(2);
     }
 }
 
-setInterval(updateTimer, 50);
+setInterval(updateTimer, updateInterval);
